@@ -10,6 +10,19 @@ const Button = ({ handleClick, text }) => {
 }
 
 const Statistics = (props) => {
+  return (
+    <div>
+      <StatisticLine text='good' value={props.good} />
+      <StatisticLine text='neutral' value={props.neutral} />      
+      <StatisticLine text='bad' value={props.bad} />
+      <StatisticLine text='all' value={props.all} />
+      <StatisticLine text='average' value={props.all == 0 ? 0 : ((props.good - props.bad) / props.all).toFixed(2)} />
+      <StatisticLine text='positive' value={(props.all == 0 ? 0 : ((props.good * 100) / props.all).toFixed(2)) + ' %'} />
+    </div>
+  )
+}
+
+const StatisticLine = (props) => {
   return <p>{props.text} {props.value}</p>
 }
 
@@ -44,14 +57,7 @@ const App = () => {
       {all === 0 ?
         (<p>No feed back given</p>) :
         (
-          <div>
-            <Statistics text='good' value={good} />
-            <Statistics text='neutral' value={neutral} />      
-            <Statistics text='bad' value={bad} />
-            <Statistics text='all' value={all} />
-            <Statistics text='average' value={all == 0 ? 0 : ((good - bad) / all).toFixed(2)} />
-            <Statistics text='positive' value={(all == 0 ? 0 : ((good * 100) / all).toFixed(2)) + ' %'} />
-          </div>
+          <Statistics good={good} bad={bad} neutral={neutral} all={all} />
       )}
     </div>
   )
