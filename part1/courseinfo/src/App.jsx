@@ -1,3 +1,4 @@
+//props.passVal.element
 const Part = (props) => {
   return (
     <p>{props.part.name} {props.part.exercises}</p>
@@ -43,6 +44,7 @@ const App = () => {
       }
     ]
   }
+  //<Function propsName={obj.element}
   return (
     <div>
       <Header course={course} />
