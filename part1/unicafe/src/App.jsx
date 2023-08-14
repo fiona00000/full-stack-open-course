@@ -41,12 +41,18 @@ const App = () => {
       <Button handleClick={handleBad} text='bad' />
 
       <Header text='statistics' />
-      <Statistics text='good' value={good} />
-      <Statistics text='neutral' value={neutral} />      
-      <Statistics text='bad' value={bad} />
-      <Statistics text='all' value={all} />
-      <Statistics text='average' value={all == 0 ? 0 : ((good - bad) / all).toFixed(2)} />
-      <Statistics text='positive' value={(all == 0 ? 0 : ((good * 100) / all).toFixed(2)) + ' %'} />
+      {all === 0 ?
+        (<p>No feed back given</p>) :
+        (
+          <div>
+            <Statistics text='good' value={good} />
+            <Statistics text='neutral' value={neutral} />      
+            <Statistics text='bad' value={bad} />
+            <Statistics text='all' value={all} />
+            <Statistics text='average' value={all == 0 ? 0 : ((good - bad) / all).toFixed(2)} />
+            <Statistics text='positive' value={(all == 0 ? 0 : ((good * 100) / all).toFixed(2)) + ' %'} />
+          </div>
+      )}
     </div>
   )
 }
