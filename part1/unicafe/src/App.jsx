@@ -9,8 +9,8 @@ const Button = ({ handleClick, text }) => {
   return <button onClick={handleClick}>{text}</button>
 }
 
-const Statistics = ({ text, value }) => {
-  return <p>{text} {value}</p>
+const Statistics = (props) => {
+  return <p>{props.text} {props.value}</p>
 }
 
 const App = () => {
@@ -18,22 +18,20 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  const [all, setAll] = useState(0)
 
   const handleGood = () => {
     setGood(good + 1);
-    setAll(all + 1);
   }
 
   const handleNeutral = () => {
     setNeutral(neutral + 1);
-    setAll(all + 1);
   }
 
   const handleBad = () => {
     setBad(bad + 1);
-    setAll(all + 1);
   }
+
+  const all = good + bad + neutral
 
   return (
     <div>
@@ -47,8 +45,8 @@ const App = () => {
       <Statistics text='neutral' value={neutral} />      
       <Statistics text='bad' value={bad} />
       <Statistics text='all' value={all} />
-      <Statistics text='average' value={all == 0 ? 0 : (good - bad) / all} />
-      <Statistics text='positive' value={(all == 0 ? 0 : (good * 100) / all) + ' %'} />
+      <Statistics text='average' value={all == 0 ? 0 : ((good - bad) / all).toFixed(2)} />
+      <Statistics text='positive' value={(all == 0 ? 0 : ((good * 100) / all).toFixed(2)) + ' %'} />
     </div>
   )
 }
