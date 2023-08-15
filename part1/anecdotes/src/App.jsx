@@ -7,7 +7,6 @@ const Button = (props) => {
 }
 
 const App = () => {
-  //len=7 (0-6)
   const anecdotes = [
     'If it hurts, do it more often',
     'Adding manpower to a late software project makes it later!',
@@ -18,8 +17,9 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients'
   ]
 
+  const initPoints = new Array(anecdotes.length).fill(0)
   const [selected, setSelected] = useState(0)
-  const [points,setPoints] = useState(new Uint8Array(anecdotes.length))
+  const [points, setPoints] = useState(initPoints)
 
   const handleSelected = () => {
     setSelected(Math.floor(Math.random() * anecdotes.length))
