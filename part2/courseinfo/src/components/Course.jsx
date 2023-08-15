@@ -3,11 +3,12 @@ import Header from './Header'
 import Total from './Total'
 
 const Course = (props) => {
+  const total = props.course.parts.reduce((sum, part) => sum + part.exercises, 0)
   return (
       <div>
           <Header course={props.course.name} />
             <Content parts={props.course.parts} />
-            <Total sum={props.course.parts[0].exercises + props.course.parts[1].exercises + props.course.parts[2].exercises} />
+            <Total sum={total} />
     </div>
   )
 }
