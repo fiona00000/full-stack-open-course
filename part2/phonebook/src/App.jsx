@@ -1,8 +1,42 @@
 import { useState } from 'react'
 
+const Filter = ({search, handleSearch}) => {
+  return (
+    <form>
+        <div>
+          filter shown with <input value={search} onChange={handleSearch} />
+        </div>
+    </form>
+  )
+}
+
+const PersonForm = ({newName, handleNameChange, newNumber, handleNumberChange, addPerson}) => {
+  return (
+    <form>
+        <div>
+          name: <input value={newName} onChange={handleNameChange} />
+        </div>
+        <div>number: <input value={newNumber} onChange={handleNumberChange} /></div>
+        <div>
+          <button type="submit" onClick={addPerson}>add</button>
+        </div>
+    </form>
+  )
+}
+
 const Person = ({ person }) => {
   return (
     <p>{person.name} {person.number}</p>
+  )
+}
+
+const Persons = ({ displayPhonebook }) => {
+  return (
+    <>
+    {displayPhonebook.map(person =>
+        ( <Person key={person.id} person={person} /> )
+      )}
+    </>
   )
 }
 
@@ -55,27 +89,14 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form>
-        <div>
-          filter shown with <input value={search} onChange={handleSearch} />
-        </div>
-      </form>
+      
+      <Filter search={search} handleSearch={handleSearch} />
+      
+      <h3>add a new</h3>
+      <PersonForm newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} addPerson={addPerson}/>
 
-      <h2>add a new</h2>
-      <form>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>number: <input value={newNumber} onChange={handleNumberChange} /></div>
-        <div>
-          <button type="submit" onClick={addPerson}>add</button>
-        </div>
-      </form>
-
-      <h2>Numbers</h2>        
-      {displayPhonebook.map(person =>
-        ( <Person key={person.id} person={person} /> )
-      )}
+      <h3>Numbers</h3>        
+      <Persons displayPhonebook={displayPhonebook}/>
       
     </div>
   )
