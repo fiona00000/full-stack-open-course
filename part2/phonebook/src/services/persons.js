@@ -12,7 +12,11 @@ const create = newObject => {
 }
 
 const update = (id, newObject) => {
-    const request = axios.put(`${baseUrl}/${id}`, newObject)
+    const request =
+        axios.put(`${baseUrl}/${id}`, newObject)
+            .catch(error => {
+                console.log('fail')
+            })
     return request.then(response => response.data)
 }
 

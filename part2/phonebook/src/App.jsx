@@ -4,9 +4,9 @@ import personService from './services/persons'
 const Notification = ({ message }) => {
   return (
     <>
-      {message &&
-        <div className='success'>
-          {message}
+      {message.message &&
+        <div className={message.type}>
+          {message.message}
       </div>
       }
     </>
@@ -63,7 +63,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [search, setSearch] = useState('')
-  const [notification, setNotification] = useState('')
+  const [notification, setNotification] = useState({message: '', type: null})
 
   useEffect(() => {
     console.log('Effect starting...')
@@ -97,7 +97,7 @@ const App = () => {
     if (exist) {
       window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
       updatePerson(persons.find(person => JSON.stringify(newName) === JSON.stringify(person.name)))
-      setNotification(`Updated ${newName}`)
+      setNotification({message: `Updated ${newName}`, type: "success"})
     } else {
       const personObject = {
         name: newName,
@@ -111,11 +111,10 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
-          setNotification(`Added ${returnedPerson.name}`)
-        })
+          setNotification({message: `Added ${returnedPerson.name}`, type: "success"})})
     }
     setTimeout(() => {
-        setNotification(null)
+        setNotification({message: '', type: null})
       }, 5000)
   }  
 
@@ -129,7 +128,6 @@ const App = () => {
       })
       .catch(err => {
         console.log(err)
-        alert(`${person.name} has been deleted from server`)
       })
   }
 
@@ -146,7 +144,10 @@ const App = () => {
       })
       .catch(err => {
         console.log(err)
-        alert(`${person.name} has been updated to server`)
+        setNotification({ message: `${person.name} was already deleted from server`, type: "error" })
+        setTimeout(() => {
+        setNotification({message: '', type: null})
+      }, 5000)
       })
   }
   
