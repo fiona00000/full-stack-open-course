@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import personService from './services/persons'
 
 const Filter = ({search, handleSearch}) => {
@@ -82,9 +81,10 @@ const App = () => {
       return JSON.stringify(newName) === JSON.stringify(person.name)
     })
 
-    if (exist)
-      alert(`${newName} is already added to phonebook`)
-    else {
+    if (exist) {
+      window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+      updatePerson(persons.find(person => JSON.stringify(newName) === JSON.stringify(person.name)))
+    } else {
       const personObject = {
         name: newName,
         number: newNumber,
@@ -112,6 +112,23 @@ const App = () => {
       .catch(err => {
         console.log(err)
         alert(`${person.name} has been deleted from server`)
+      })
+  }
+
+  const updatePerson = personObj => {
+    const person = persons.find(person => person.id === personObj.id)
+    const updatedPerson = { ...person, "number": newNumber }
+    
+    personService
+      .update(updatedPerson.id, updatedPerson)
+      .then(response => {        
+        setPersons(persons.map(person => person.id !== response.id ? person : response))
+        setNewName('')
+        setNewNumber('')
+      })
+      .catch(err => {
+        console.log(err)
+        alert(`${person.name} has been updated to server`)
       })
   }
   
