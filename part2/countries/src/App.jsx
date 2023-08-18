@@ -37,7 +37,7 @@ const Country = ({ country }) => {
   }
   return (
     <>
-      <button onClick={handleShow}>show</button>
+      <button onClick={handleShow}>{show ? "hide" : "show"}</button>
       {show && 
         <>
           <h2>{country.name.common}</h2>
