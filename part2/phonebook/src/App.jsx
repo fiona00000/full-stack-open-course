@@ -87,9 +87,7 @@ const App = () => {
       setNewName('')
       setNewNumber('')
     }
-  }
-
-  
+  }  
   
   const displayPhonebook = search
   ? persons.filter(person => {return person.name.toUpperCase().includes(search.toUpperCase())})
@@ -102,7 +100,9 @@ const App = () => {
       <Filter search={search} handleSearch={handleSearch} />
       
       <h3>add a new</h3>
-      <PersonForm newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} addPerson={addPerson}/>
+      <PersonForm newName={newName} handleNameChange={handleNameChange}
+        newNumber={newNumber} handleNumberChange={handleNumberChange}
+        addPerson={addPerson} />
 
       <h3>Numbers</h3>        
       <Persons displayPhonebook={displayPhonebook}/>
