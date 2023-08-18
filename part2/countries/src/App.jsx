@@ -10,11 +10,16 @@ const Search = ({find, handleClick}) => {
 }
 
 const Countries = ({ countries }) => {
-console.log(countries)
   return (
     <>
       {countries.map(country => {
-        return (<p key={country.id}>{country.name.common}</p>)
+        return (
+          <div key={country.id}>
+            {country.name.common} &nbsp;            
+              <Country key={country.id} country={country} />
+            
+          </div>
+        )
       })}
     </>
   )
@@ -25,27 +30,36 @@ const Country = ({ country }) => {
   return { id: id, value: country.languages[id] };
   });
 
+  const [show, setShow] = useState(false)
+
+  const handleShow = () => {
+    setShow(!show)
+  }
   return (
     <>
-      <h2>{country.name.common}</h2>
-      <p>capital {country.capital[0]}</p>
-      <p>area {country.area}</p>
-      <br />
-      <p><b>languages:</b></p>
-      <ul>
-        {languageObj.map((language) => {
-          return <li key={language.id}>{language.value}</li>
-        })} 
-
-      </ul>
-      <img src={country.flags.png}/>
+      <button onClick={handleShow}>show</button>
+      {show && 
+        <>
+          <h2>{country.name.common}</h2>
+          capital {country.capital[0]} <br/>
+          area {country.area}
+          <br />
+          <p><b>languages:</b></p>
+          <ul>
+            {languageObj.map((language) => {
+              return <li key={language.id}>{language.value}</li>
+            })} 
+          </ul>
+          <img src={country.flags.png} />
+        </>        
+      }
     </>
   )
 }
 
 function App() {
   const [countries, setCountries] = useState([])
-  const [find, setFind] = useState('')
+  const [find, setFind] = useState('sw')
 
   useEffect(() => {
     console.log('Effect starting to retrieve data...')
@@ -68,10 +82,6 @@ function App() {
   const resultCountries = find
     ? countries.filter(country => country.name.common.toUpperCase().includes(find.toUpperCase()))
     : ""
-
-  const displayCountries = resultCountries.length > 10 ?
-      "Too many matches, specify another filter"
-    : resultCountries
   
   const resLen = resultCountries.length
 
@@ -82,8 +92,8 @@ function App() {
 
       {resLen > 10 ?
         (<div>Too many matches, specify another filter</div>)
-        : resLen === 1 ?
-          (<Country country={resultCountries[0]} />)
+        // : resLen === 1 ?
+        //   (<Country country={resultCountries[0]} />)
           : resLen !== 0 && resLen <= 10 ?
             <Countries countries={resultCountries} />
           : null}
