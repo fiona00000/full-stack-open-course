@@ -1,6 +1,18 @@
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
 
+const Notification = ({ message }) => {
+  return (
+    <>
+      {message &&
+        <div className='success'>
+          {message}
+      </div>
+      }
+    </>
+  )
+}
+
 const Filter = ({search, handleSearch}) => {
   return (
     <form>
@@ -48,6 +60,10 @@ const Persons = ({ displayPhonebook, remove }) => {
 
 const App = () => {
   const [persons, setPersons] = useState([])
+  const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+  const [search, setSearch] = useState('')
+  const [notification, setNotification] = useState('')
 
   useEffect(() => {
     console.log('Effect starting...')
@@ -59,9 +75,6 @@ const App = () => {
       })
   },[])
   
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
-  const [search, setSearch] = useState('')
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -84,6 +97,7 @@ const App = () => {
     if (exist) {
       window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
       updatePerson(persons.find(person => JSON.stringify(newName) === JSON.stringify(person.name)))
+      setNotification(`Updated ${newName}`)
     } else {
       const personObject = {
         name: newName,
@@ -97,8 +111,12 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setNotification(`Added ${returnedPerson.name}`)
         })
     }
+    setTimeout(() => {
+        setNotification(null)
+      }, 5000)
   }  
 
   const deletePerson = id => {
@@ -139,7 +157,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      
+      <Notification message={notification} />
       <Filter search={search} handleSearch={handleSearch} />
       
       <h3>add a new</h3>
