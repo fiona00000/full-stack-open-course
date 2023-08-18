@@ -57,9 +57,21 @@ const Country = ({ country }) => {
   )
 }
 
+const Weather = () => {
+  return (
+    <>
+      <h2>Weather in Helsinki</h2>
+      temperature Celcius <br/>
+      <br/>
+      wind m/s
+    </>
+  )
+}
+
 function App() {
+  console.log(process.env.REACT_APP_API_KEY)
   const [countries, setCountries] = useState([])
-  const [find, setFind] = useState('sw')
+  const [find, setFind] = useState('')
 
   useEffect(() => {
     console.log('Effect starting to retrieve data...')
@@ -92,11 +104,9 @@ function App() {
 
       {resLen > 10 ?
         (<div>Too many matches, specify another filter</div>)
-        // : resLen === 1 ?
-        //   (<Country country={resultCountries[0]} />)
           : resLen !== 0 && resLen <= 10 ?
             <Countries countries={resultCountries} />
-          : null}
+            : null}
     </div>    
   )
 }
