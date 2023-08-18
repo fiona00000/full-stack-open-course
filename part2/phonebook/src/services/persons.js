@@ -13,11 +13,13 @@ const create = newObject => {
 
 const update = (id, newObject) => {
     const request = axios.put(`${baseUrl}/${id}`, newObject)
+        .catch(err => console.log("update function failed: ", err))
     return request.then(response => response.data)
 }
 
-export default {
-    getAll: getAll,
-    create: create,
-    update: update
+const remove = (id) => {
+    const request = axios.delete(`${baseUrl}/${id}`)
+    return request.then(response => response.data)
 }
+
+export default { getAll, create, update, remove }

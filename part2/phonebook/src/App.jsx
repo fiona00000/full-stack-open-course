@@ -26,17 +26,22 @@ const PersonForm = ({newName, handleNameChange, newNumber, handleNumberChange, a
   )
 }
 
-const Person = ({ person }) => {
+const Person = ({ person, remove }) => {
+  const deletePerson = () => {
+    if (window.confirm(`Delete ${person.name} ?`))
+     remove(person.id)
+  }
   return (
-    <p>{person.name} {person.number}</p>
+    <p>{person.name} {person.number} &nbsp;
+    <button onClick={deletePerson}>delete</button></p>
   )
 }
 
-const Persons = ({ displayPhonebook }) => {
+const Persons = ({ displayPhonebook, remove }) => {
   return (
     <>
     {displayPhonebook.map(person =>
-        ( <Person key={person.id} person={person} /> )
+        ( <Person key={person.id} person={person} remove={remove} /> )
       )}
     </>
   )
@@ -95,6 +100,20 @@ const App = () => {
         })
     }
   }  
+
+  const deletePerson = id => {
+    const person = persons.find(idx => idx.id === id)
+
+    personService
+      .remove(id)
+      .then(() => {        
+        setPersons(persons.filter(person => person.id !== id))
+      })
+      .catch(err => {
+        console.log(err)
+        alert(`${person.name} has been deleted from server`)
+      })
+  }
   
   const displayPhonebook = search
   ? persons.filter(person => {return person.name.toUpperCase().includes(search.toUpperCase())})
@@ -112,7 +131,7 @@ const App = () => {
         addPerson={addPerson} />
 
       <h3>Numbers</h3>        
-      <Persons displayPhonebook={displayPhonebook}/>
+      <Persons displayPhonebook={displayPhonebook} remove={deletePerson}/>
       
     </div>
   )
