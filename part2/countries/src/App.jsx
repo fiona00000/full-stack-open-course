@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
+// TODO: weather and API
+
 const Search = ({find, handleClick}) => {
   return (
     <>
