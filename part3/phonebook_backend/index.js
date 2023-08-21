@@ -94,13 +94,13 @@ app.delete('/api/persons/:id', (request, response, next) => {
 })
 
 app.get('/info', (request, response) => {
-    const str = `<p>Phonebook has info for ${persons.length} people</p> <p>${new Date()}</p>`
+    const str = `<p>Phonebook has info for ${Phonebook.length} people</p> <p>${new Date()}</p>`
     response.send(str)
 })
 
 const unknownEndpoint = (request, response) => {
     response.status(404)
-        .send({ error: "unknown endpoint" })
+        .send({ error: 'unknown endpoint' })
 }
 app.use(unknownEndpoint)
 
