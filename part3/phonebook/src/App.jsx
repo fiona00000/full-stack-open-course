@@ -60,7 +60,12 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
-          setNotification({message: `Added ${returnedPerson.name}`, type: "success"})})
+          setNotification({ message: `Added ${returnedPerson.name}`, type: "success" })
+        })
+        .catch(error => {
+          console.log(error.response.data.error)
+          setNotification({message: "error: " + error.response.data.error, type: "error"})
+      })
     }
     setTimeout(() => {
         setNotification({message: '', type: null})
