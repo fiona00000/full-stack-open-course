@@ -39,34 +39,39 @@ const generateId = () => {
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
-    const exists = persons.some(person => JSON.stringify(person.name) === JSON.stringify(body.name))
-
-    if (body.name === undefined || !body.number === undefined) {
+    if (!body.name || !body.number) {
         return response.status(400).json({
             error: 'name or number is missing'
         })
-    } else if (exists) {
-        return response.status(400).json({
-            error: 'name must be unique'
-        })
+    } else {
+        Phonebook.findOne({ name: body.name })
+            .then(person => {
+                if (person) {
+                    return response.status(400).json({
+                        error: 'name must be unique'
+                    })
+                }
+
+                const phonebook = new Phonebook(
+                    {
+                        name: body.name,
+                        number: body.number,
+                    })
+
+                phonebook.save()
+                    .then(savedPerson => {
+                        response.json(savedPerson)
+                    })
+            })
+
     }
-
-    const person = new Person(
-        {
-            name: body.name,
-            number: body.number,
-        })
-
-    person.save().then(savedPerson => {
-        response.json(person)
-    })
-
 })
 
 app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(person => person.id === id)
-    person ? response.json(person) : response.status(404).end()
+    Phonebook.findById(request.params.id)
+        .then(person => {
+            response.json(person)
+        })
 })
 
 app.delete('/api/persons/:id', (request, response) => {
