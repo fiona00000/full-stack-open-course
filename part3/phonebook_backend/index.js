@@ -1,6 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const mongoose = require('mongoose')
+const Phonebook = require('./models/phonebook')
 
 const app = express()
 
@@ -17,29 +20,6 @@ app.use(express.json())
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :req-body'))
 
-let persons = [
-    {
-        "id": 1,
-        "name": "Arto Hellas",
-        "number": "040-123456"
-    },
-    {
-        "id": 2,
-        "name": "Ada Lovelace",
-        "number": "39-44-5323523"
-    },
-    {
-        "id": 3,
-        "name": "Dan Abramov",
-        "number": "12-43-234345"
-    },
-    {
-        "id": 4,
-        "name": "Mary Poppendieck",
-        "number": "39-23-6423122"
-    }
-]
-
 app.use(express.json())
 
 app.get('/', (request, response) => {
@@ -47,7 +27,10 @@ app.get('/', (request, response) => {
 })
 
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+    Phonebook.find({})
+        .then(persons => {
+            response.json(persons)
+        })
 })
 
 const generateId = () => {
@@ -58,7 +41,7 @@ app.post('/api/persons', (request, response) => {
     const body = request.body
     const exists = persons.some(person => JSON.stringify(person.name) === JSON.stringify(body.name))
 
-    if (!body.name || !body.number) {
+    if (body.name === undefined || !body.number === undefined) {
         return response.status(400).json({
             error: 'name or number is missing'
         })
@@ -68,15 +51,16 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
-    const person = {
-        id: generateId(),
-        name: body.name,
-        number: body.number
-    }
+    const person = new Person(
+        {
+            name: body.name,
+            number: body.number,
+        })
 
-    persons = persons.concat(person)
+    person.save().then(savedPerson => {
+        response.json(person)
+    })
 
-    response.json(person)
 })
 
 app.get('/api/persons/:id', (request, response) => {
@@ -97,7 +81,6 @@ app.get('/info', (request, response) => {
     response.send(str)
 })
 
-
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
