@@ -4,7 +4,7 @@ import App from './App.jsx'
 import axios from 'axios'
 import './index.css'
 
-axios.get('http://localhost:3001/api/persons')
+axios.get('/api/persons')
   .then(response => {
     const persons = response.data
     ReactDOM.createRoot(document.getElementById('root'))
