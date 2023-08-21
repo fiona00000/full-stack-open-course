@@ -2,14 +2,13 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const mongoose = require('mongoose')
 const Phonebook = require('./models/phonebook')
 
 const app = express()
 
 app.use(cors())
 app.use(express.static('dist'))
-app.use(requestLogger)
+
 
 morgan.token('req-body', (req, res) => {
     if (req.method === 'POST')
@@ -61,7 +60,6 @@ app.post('/api/persons', (request, response) => {
                         response.json(savedPerson)
                     })
             })
-
     }
 })
 
@@ -77,6 +75,20 @@ app.get('/api/persons/:id', (request, response, next) => {
         .catch(err => {
             next(err)
         })
+})
+
+app.put('/api/persons/:id', (request, response, next) => {
+    const body = request.body
+    const person = {
+        name: body.name,
+        number: body.number
+    }
+
+    Phonebook.findByIdAndUpdate(request.params.id, person, { new: true })
+        .then(updatedPerson => {
+            response.json(updatedPerson)
+        })
+        .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
