@@ -65,7 +65,7 @@ app.post('/api/persons', (request, response) => {
     }
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
     Phonebook.findById(request.params.id)
         .then(person => {
             if (person) {
@@ -79,7 +79,7 @@ app.get('/api/persons/:id', (request, response) => {
         })
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
     Phonebook.findByIdAndRemove(request.params.id)
         .then(person => {
             if (person) {
@@ -89,8 +89,7 @@ app.delete('/api/persons/:id', (request, response) => {
             }
         })
         .catch(err => {
-            console.log(err)
-            response.status(400).send({ error: 'malformatted id' })
+            next(err)
         })
 })
 
