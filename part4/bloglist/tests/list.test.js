@@ -31,3 +31,20 @@ test('when list has multiple value of blog, equals the sum of likes', () => {
     const result = listHelper.totalLikes(blogs)
     expect(result).toBe(36)
 })
+
+describe('favorite blog', () => {
+
+    const mostLikeObject = {
+        _id: '5a422b3a1b54a676234d17f9',
+        title: 'Canonical string reduction',
+        author: 'Edsger W. Dijkstra',
+        url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+        likes: 12,
+        __v: 0
+    }
+
+    test('returns the blog object with most like', () => {
+        const result = listHelper.favoriteBlog(blogs)
+        expect(result).toEqual(mostLikeObject)
+    })
+})
