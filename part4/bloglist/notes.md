@@ -22,3 +22,7 @@
 ## Requests
 
 - testing for requests
+
+# TODO
+
+exercise 4,6, 4.7

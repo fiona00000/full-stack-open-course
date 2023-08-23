@@ -2,12 +2,12 @@ const { blogs } = require('./testBlogData')
 
 const listHelper = require('../utils/list_helper')
 
-// test('dummy returns one', () => {
-//     const blogs = []
+test('dummy returns one', () => {
+    const blogs = []
 
-//     const result = listHelper.dummy(blogs)
-//     expect(result).toBe(1)
-// })
+    const result = listHelper.dummy(blogs)
+    expect(result).toBe(1)
+})
 
 describe('total likes', () => {
     const listWithOneBlog = [
@@ -46,5 +46,18 @@ describe('favorite blog', () => {
     test('returns the blog object with most like', () => {
         const result = listHelper.favoriteBlog(blogs)
         expect(result).toEqual(mostLikeObject)
+    })
+})
+
+describe('most blog', () => {
+
+    const mostBlogAuthor = {
+        author: "Robert C. Martin",
+        blogs: 3
+    }
+
+    test('returns the blog object with most like', () => {
+        const result = listHelper.mostBlogs(blogs)
+        expect(result).toEqual(mostBlogAuthor)
     })
 })
