@@ -24,8 +24,16 @@ const errorHandler = (error, request, response, next) => {
     next(error)
 }
 
+const checkRequiredField = (request, response, next) => {
+    if (!request.body.title || !request.body.url) {
+        return response.status(400).json({ error: 'Missing title / url' })
+    }
+    next()
+}
+
 module.exports = {
     requestLogger,
     unknownEndpoint,
-    errorHandler
+    errorHandler,
+    checkRequiredField
 }

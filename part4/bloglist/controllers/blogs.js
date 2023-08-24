@@ -1,12 +1,13 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
+const { checkRequiredField } = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response) => {
     const blogs = await Blog.find({})
     response.json(blogs)
 })
 
-blogsRouter.post('/', async (request, response) => {
+blogsRouter.post('/', checkRequiredField, async (request, response) => {
     const blog = new Blog(request.body)
 
     const savedBlog = await blog.save()
