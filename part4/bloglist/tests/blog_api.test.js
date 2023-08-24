@@ -35,6 +35,25 @@ test('unique identifier property of the blog posts is named id',
     }
     , 100000)
 
+test('a valid blog is added', async () => {
+    const newBlog = {
+        title: "Testing Blog",
+        author: "Test",
+        url: "nothing",
+        likes: 7,
+        __v: 0
+    }
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+    const response = await api.get('/api/blogs')
+        .expect('Content-Type', /application\/json/)
+    expect(response.body).toHaveLength(helper.initialBlogs.length + 1)
+}, 100000)
+
 
 afterAll(() => {
     mongoose.connection.close()
