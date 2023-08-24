@@ -54,6 +54,20 @@ test('a valid blog is added', async () => {
     expect(response.body).toHaveLength(helper.initialBlogs.length + 1)
 }, 100000)
 
+test('empty like will be 0', async () => {
+    const newBlog = {
+        title: "Testing Blog",
+        author: "Test",
+        url: "nothing",
+        __v: 0
+    }
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+    const response = await api.get('/api/blogs')
+    expect(response.body[helper.initialBlogs.length].likes).toBe(0)
+})
+
 
 afterAll(() => {
     mongoose.connection.close()
