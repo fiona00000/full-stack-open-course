@@ -3,6 +3,7 @@ const supertest = require('supertest')
 const helper = require('./test_helper')
 const app = require('../app')
 const Blog = require('../models/blog')
+const { text } = require('express')
 const api = supertest(app)
 
 beforeEach(async () => {
@@ -93,7 +94,7 @@ describe('addition of a new blog', () => {
 })
 
 describe('deletion of a note', () => {
-    test('succeeds wiht status code 204 if id is valid', async () => {
+    test('succeeds with status code 204 if id is valid', async () => {
         const blogAtStart = await helper.blogsInDb()
         const blogToDelete = blogAtStart[0]
 
@@ -108,6 +109,29 @@ describe('deletion of a note', () => {
 
         const ids = blogsAtEnd.map(blog => blog.id)
         expect(ids).not.toContain(blogToDelete.id)
+    })
+})
+
+describe('updation of a blog', () => {
+    test('updating the information of an individual blog post', async () => {
+        const originalBlog = await helper.blogsInDb()
+
+        const updatedBlog = {
+            id: originalBlog[0].id,
+            title: originalBlog[0].title,
+            author: originalBlog[0].author,
+            url: originalBlog[0].url,
+            likes: originalBlog[0].likes + 1,
+        }
+        await api
+            .put(`/api/blogs/${updatedBlog.id}`)
+            .send(updatedBlog)
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
+
+        const response = await api.get('/api/blogs')
+
+        expect(response.body[0].likes).toBe(originalBlog[0].likes + 1)
     })
 })
 
