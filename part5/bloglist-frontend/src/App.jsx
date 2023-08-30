@@ -6,9 +6,9 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
-  const [newBlogVisible, setBlogVisible] = useState(false)
+  
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState({})
+  
   const [notification, setNotification] = useState({message: '', type: null})
   const [username, setUsername] = useState([])
   const [password, setPassword] = useState('')
@@ -56,35 +56,7 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.clear()
     setUser(null)
-  }
-
-  const handleNewBlogChange = (event) => {
-    const { name, value } = event.target
-    setNewBlog((prevContent => ({
-      ...prevContent,
-      [name]: value
-    })))
-  }
-
-  const addBlog = () => {
-    const newObj = {
-        title: newBlog.title,
-        author: newBlog.author,
-        url: newBlog.url,
-        userId:user.id
-    }
-    blogService.create(newObj)
-      .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
-        setNewBlog({})
-        setNotification({ message: `a new blog  ${returnedBlog.title} by ${returnedBlog.author} added`, type: "success" })
-
-        setTimeout(() => {
-        setNotification({message: '', type: null})
-      },5000)
-      })
-    .then(()=>setBlogVisible(false))
-  }
+  }  
 
   return (
     <div>
@@ -102,10 +74,8 @@ const App = () => {
         <Blogs user={user}
           handleLogout={handleLogout}
           blogs={blogs}
-          handleNewBlogChange={handleNewBlogChange}
-          addBlog={addBlog}
-          newBlogVisible={newBlogVisible}
-          setBlogVisible={setBlogVisible}
+          setNotification={setNotification}
+          setBlogs={setBlogs}
         />        
       }
     </div>

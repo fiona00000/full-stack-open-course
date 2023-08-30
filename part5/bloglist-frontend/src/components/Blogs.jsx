@@ -1,8 +1,42 @@
+import { useState } from "react"
+import blogService from "../services/blogs"
 import Blog from "./Blog"
+import NewBlogForm from "./NewBlogForm"
 
 const Blogs = (props) => {
-     const hide = { display: props.newBlogVisible ? 'none' : '' }
-    const show = { display: props.newBlogVisible ? '' : 'none' }
+    const [newBlogVisible, setBlogVisible] = useState(false)
+    const [newBlog, setNewBlog] = useState({})
+     const hide = { display: newBlogVisible ? 'none' : '' }
+    const show = { display: newBlogVisible ? '' : 'none' }
+
+    const handleNewBlogChange = (event) => {
+    const { name, value } = event.target
+    setNewBlog((prevContent => ({
+        ...prevContent,
+        [name]: value
+        })))
+    }
+    
+    const addBlog = () => {
+    const newObj = {
+        title: newBlog.title,
+        author: newBlog.author,
+        url: newBlog.url,
+        userId: props.user.id
+    }
+    blogService.create(newObj)
+      .then(returnedBlog => {
+        props.setBlogs(props.blogs.concat(returnedBlog))
+        setNewBlog({})
+        props.setNotification({ message: `a new blog  ${returnedBlog.title} by ${returnedBlog.author} added`, type: "success" })
+
+        setTimeout(() => {
+        props.setNotification({message: '', type: null})
+      },5000)
+      })
+    .then(()=>setBlogVisible(false))
+    }
+    
   return (
       <div>
           <h2>blogs</h2>
@@ -10,18 +44,14 @@ const Blogs = (props) => {
               <button onClick={props.handleLogout}>logout</button></p>
           
           <div style={hide}>
-              <button onClick={()=> props.setBlogVisible(true)}>new note</button>
+              <button onClick={()=> setBlogVisible(true)}>new note</button>
           </div>
 
         <div style={show}>
-            <h2>create new</h2>
-            
-            <p>title: <input type="text" name="title" onChange={props.handleNewBlogChange} /></p>
-            <p>author: <input type="text" name="author" onChange={props.handleNewBlogChange} /></p>
-              <p>url: <input type="url" name="url" onChange={props.handleNewBlogChange} /></p>
-              
-            <button onClick={props.addBlog}>create</button><br/>
-            <button onClick={()=>props.setBlogVisible(false)}>cancel</button>
+              <NewBlogForm
+                  handleNewBlogChange={handleNewBlogChange}
+                  addBlog={addBlog}
+                  setBlogVisible={setBlogVisible} />
         </div>
         {props.blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
