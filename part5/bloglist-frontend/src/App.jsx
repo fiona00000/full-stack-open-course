@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [newBlog, setNewBlog] = useState({})
-  const [errorMessage, setErrorMessage] = useState({message: '', type: null})
+  const [notification, setNotification] = useState({message: '', type: null})
   const [username, setUsername] = useState([])
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -43,10 +44,10 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-    } catch (exception) {
-      setErrorMessage('Wrong credentials')
+    } catch (err) {
+      setNotification({message: 'Wrong username or password', type: "error"})
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotification({message: '', type: null})
       },5000)
     }
   }
@@ -65,26 +66,32 @@ const App = () => {
   }
 
   const addBlog = () => {
-        const newObj = {
-            title: newBlog.title,
-            author: newBlog.author,
-            url: newBlog.url,
-            userId:user.id
-        }
+    const newObj = {
+        title: newBlog.title,
+        author: newBlog.author,
+        url: newBlog.url,
+        userId:user.id
+    }
     blogService.create(newObj)
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
         setNewBlog({})
-    })
+        setNotification({ message: `a new blog  ${returnedBlog.title} by ${returnedBlog.author} added`, type: "success" })
+
+        setTimeout(() => {
+        setNotification({message: '', type: null})
+      },5000)
+      })
   }
 
   return (
     <div>
+      <Notification message={notification} />
+
       {user === null ?
         <LoginForm username={username} password={password} setUsername={setUsername} setPassword={setPassword} handleLogin={handleLogin} />
         :
-        <Blogs user={user} handleLogout={handleLogout} blogs={blogs} handleNewBlogChange={handleNewBlogChange} addBlog={addBlog}/>
-        
+        <Blogs user={user} handleLogout={handleLogout} blogs={blogs} handleNewBlogChange={handleNewBlogChange} addBlog={addBlog}/>        
       }
     </div>
   )
