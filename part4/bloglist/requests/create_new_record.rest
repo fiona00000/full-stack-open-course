@@ -6,7 +6,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NGVlNzEwOWU2MjRkNWM0Njk1ZGQ3M2MiLCJpYXQiOjE2OTM0MDYwNTV9.2U8QqZoedwe0HE838g7w1Zveo2XMAvScwHd6imfc2z8
 
 {
-    "title": "demo title_token",
+    "title": "demo title_token_middleware",
     "author": "demo author",
     "url": "demo",
     "likes": 1,
