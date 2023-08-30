@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import Blog from './components/Blog'
+import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlogs, setNewBlogs] = useState('')
+  const [newBlog, setNewBlog] = useState({})
   const [errorMessage, setErrorMessage] = useState({message: '', type: null})
   const [username, setUsername] = useState([])
   const [password, setPassword] = useState('')
@@ -56,19 +56,36 @@ const App = () => {
     setUser(null)
   }
 
+  const handleNewBlogChange = (event) => {
+    const { name, value } = event.target
+    setNewBlog((prevContent => ({
+      ...prevContent,
+      [name]: value
+    })))
+  }
+
+  const addBlog = () => {
+        const newObj = {
+            title: newBlog.title,
+            author: newBlog.author,
+            url: newBlog.url,
+            userId:user.id
+        }
+    blogService.create(newObj)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+        setNewBlog({})
+    })
+  }
+
   return (
     <div>
       {user === null ?
         <LoginForm username={username} password={password} setUsername={setUsername} setPassword={setPassword} handleLogin={handleLogin} />
         :
-        <div>
-          <h2>blogs</h2>
-          <p>{user.name} logged in 
-          <button onClick={handleLogout}>logout</button></p>
-            {blogs.map(blog =>
-              <Blog key={blog.id} blog={blog} />
-            )}
-        </div>}      
+        <Blogs user={user} handleLogout={handleLogout} blogs={blogs} handleNewBlogChange={handleNewBlogChange} addBlog={addBlog}/>
+        
+      }
     </div>
   )
 }
