@@ -9,5 +9,5 @@ Content-Type: application/json
     "author": "demo author",
     "url": "demo",
     "likes": 1,
-    "user"
+    "userId":"64ee7109e624d5c4695dd73c"
 }

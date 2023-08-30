@@ -136,6 +136,16 @@ describe('updation of a blog', () => {
     })
 })
 
+describe('initialize with blogs user information', () => {
+    test('blogs are returned as json', async () => {
+        await api
+            .get('/api/blogs')
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
+            .expect(response.body[0].user).toBeDefined()
+    }, 100000)
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })

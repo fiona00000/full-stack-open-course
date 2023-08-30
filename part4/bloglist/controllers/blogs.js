@@ -1,5 +1,6 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
+const User = require('../models/user')
 const { checkRequiredField } = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response) => {
@@ -18,7 +19,7 @@ blogsRouter.post('/', checkRequiredField, async (request, response, next) => {
         author: body.author,
         url: body.url,
         likes: body.likes,
-        user: user._id
+        user: user.id
     })
 
     const savedBlog = await blog.save()
@@ -26,7 +27,6 @@ blogsRouter.post('/', checkRequiredField, async (request, response, next) => {
     await user.save()
 
     response.status(201).json(savedBlog)
-
 })
 
 blogsRouter.get('/:id', async (request, response) => {
