@@ -31,8 +31,8 @@ const Blogs = (props) => {
         props.setNotification({ message: `a new blog  ${returnedBlog.title} by ${returnedBlog.author} added`, type: "success" })
 
         setTimeout(() => {
-        props.setNotification({message: '', type: null})
-      },5000)
+            props.setNotification({message: '', type: null})
+        },5000)
       })
     .then(()=>setBlogVisible(false))
     }
@@ -44,7 +44,7 @@ const Blogs = (props) => {
               <button onClick={props.handleLogout}>logout</button></p>
           
           <div style={hide}>
-              <button onClick={()=> setBlogVisible(true)}>new note</button>
+              <button onClick={()=> setBlogVisible(true)}>create new blog</button>
           </div>
 
         <div style={show}>
