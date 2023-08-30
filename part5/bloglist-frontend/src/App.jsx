@@ -6,6 +6,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
+  const [newBlogVisible, setBlogVisible] = useState(false)
   const [blogs, setBlogs] = useState([])
   const [newBlog, setNewBlog] = useState({})
   const [notification, setNotification] = useState({message: '', type: null})
@@ -82,6 +83,7 @@ const App = () => {
         setNotification({message: '', type: null})
       },5000)
       })
+    .then(()=>setBlogVisible(false))
   }
 
   return (
@@ -89,9 +91,22 @@ const App = () => {
       <Notification message={notification} />
 
       {user === null ?
-        <LoginForm username={username} password={password} setUsername={setUsername} setPassword={setPassword} handleLogin={handleLogin} />
+        <LoginForm
+          username={username}
+          password={password}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleLogin={handleLogin}
+        />
         :
-        <Blogs user={user} handleLogout={handleLogout} blogs={blogs} handleNewBlogChange={handleNewBlogChange} addBlog={addBlog}/>        
+        <Blogs user={user}
+          handleLogout={handleLogout}
+          blogs={blogs}
+          handleNewBlogChange={handleNewBlogChange}
+          addBlog={addBlog}
+          newBlogVisible={newBlogVisible}
+          setBlogVisible={setBlogVisible}
+        />        
       }
     </div>
   )
