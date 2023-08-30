@@ -1,12 +1,15 @@
 GET http://localhost:3003/api/blogs
 
 ###
+GET http://localhost:3003/api/users
+
+###
 POST http://localhost:3003/api/blogs HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NGVlNzEwOWU2MjRkNWM0Njk1ZGQ3M2MiLCJpYXQiOjE2OTM0MDYwNTV9.2U8QqZoedwe0HE838g7w1Zveo2XMAvScwHd6imfc2z8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NGVlNzEwOWU2MjRkNWM0Njk1ZGQ3M2MiLCJpYXQiOjE2OTM0MDkzNTksImV4cCI6MTY5MzQxMjk1OX0.SubWTLdxDuBugavFD4q5Q55uq4C8r2US5lUXWoFEBRQ
 
 {
-    "title": "demo title_token_middleware",
+    "title": "demo title_token_middleware_delete_test2",
     "author": "demo author",
     "url": "demo",
     "likes": 1,
