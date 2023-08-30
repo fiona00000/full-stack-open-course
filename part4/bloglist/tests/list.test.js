@@ -1,4 +1,4 @@
-const { blogs } = require('./testBlogData')
+const { initialBlogs } = require('./testBlogData')
 
 const listHelper = require('../utils/list_helper')
 

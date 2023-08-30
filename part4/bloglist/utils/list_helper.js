@@ -1,4 +1,4 @@
-const { blogs } = require('../tests/testBlogData')
+const { initialBlogs } = require('../tests/testBlogData')
 
 const dummy = (blogs) => {
     return 1
@@ -30,7 +30,7 @@ const mostBlogs = (blogs) => {
     // return authorBlogs.reduce((maxBlogs, current) => current.count > maxBlogs.count ? current : maxBlogs, authorBlogs[0])
 }
 
-mostBlogs(blogs)
+mostBlogs(initialBlogs)
 
 const mostLikes = (blogs) => {
 

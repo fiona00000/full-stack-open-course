@@ -3,12 +3,13 @@ const supertest = require('supertest')
 const helper = require('./test_helper')
 const app = require('../app')
 const Blog = require('../models/blog')
+const { initialBlogs } = require('../tests/testBlogData')
 const { text } = require('express')
 const api = supertest(app)
 
 beforeEach(async () => {
     await Blog.deleteMany({})
-    await Blog.insertMany(helper.initialBlogs)
+    await Blog.insertMany(initialBlogs)
 })
 
 describe('when there is initially some blogs saved', () => {
