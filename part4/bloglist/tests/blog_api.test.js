@@ -44,6 +44,7 @@ describe('addition of a new blog', () => {
         await api
             .post('/api/blogs')
             .send(newBlog)
+            .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NGVlNzEwOWU2MjRkNWM0Njk1ZGQ3M2MiLCJpYXQiOjE2OTM0MDkzNTksImV4cCI6MTY5MzQxMjk1OX0.SubWTLdxDuBugavFD4q5Q55uq4C8r2US5lUXWoFEBRQ')
             .expect(201)
             .expect('Content-Type', /application\/json/)
 
@@ -144,6 +145,23 @@ describe('initialize with blogs user information', () => {
             .expect('Content-Type', /application\/json/)
             .expect(response.body[0].user).toBeDefined()
     }, 100000)
+})
+
+describe('Verify token-based authentication', () => {
+    test('blogs are returned with correct error code when wrong token', async () => {
+        const newBlog = {
+            title: "Testing Blog",
+            author: "Test",
+            url: "nothing",
+            likes: 7,
+            __v: 0
+        }
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(401)
+
+    }, 10000)
 })
 
 afterAll(() => {

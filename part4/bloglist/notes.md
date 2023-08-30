@@ -25,4 +25,4 @@
 
 # TODO
 
-exercise 4,6, 4.7
+exercise 4,6, 4.7, 4.23 (need to fix the test)
