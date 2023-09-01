@@ -109,17 +109,22 @@ const App = () => {
   
   return (
     <div>
-      <h2>Phonebook</h2>
-      <Notification message={notification} />
-      <Filter search={search} handleSearch={handleSearch} />
-      
-      <h3>add a new</h3>
-      <PersonForm newName={newName} handleNameChange={handleNameChange}
-        newNumber={newNumber} handleNumberChange={handleNumberChange}
-        addPerson={addPerson} />
+      <h2 className="navbar navbar-expand-lg bg-primary text-light px-3" data-bs-theme="dark">Demo-Phonebook</h2>
+      <div className='container px-4 py-3'>
+        <Notification message={notification} />
+        <Filter search={search} handleSearch={handleSearch} />
+        <br/>
+        
+        <h3>Add a New Contact</h3>
+        <PersonForm newName={newName} handleNameChange={handleNameChange}
+          newNumber={newNumber} handleNumberChange={handleNumberChange}
+          addPerson={addPerson} />
+        <br/>
 
-      <h3>Numbers</h3>        
-      <Persons displayPhonebook={displayPhonebook} remove={deletePerson}/>
+        <h3>Contacts</h3>        
+        <Persons displayPhonebook={displayPhonebook} remove={deletePerson}/>
+      </div>
+      
       
     </div>
   )
