@@ -16,7 +16,6 @@ const Blog = (props) => {
 
   const [likes, setLikes] = useState(props.blog.likes)
   const updateLike = () => {
-    console.log("num like: ", props.blog.likes)
     const updatedBlog = {
       ...props.blog,
       likes: props.blog.likes += 1

@@ -18,24 +18,26 @@ const Blogs = (props) => {
     }
     
     const addBlog = () => {
-    const newObj = {
-        title: newBlog.title,
-        author: newBlog.author,
-        url: newBlog.url,
-        userId: props.user.id
-    }
-    blogService.create(newObj)
-      .then(returnedBlog => {
-        props.setBlogs(props.blogs.concat(returnedBlog))
-        setNewBlog({})
-        props.setNotification({ message: `a new blog  ${returnedBlog.title} by ${returnedBlog.author} added`, type: "success" })
+        const newObj = {
+            title: newBlog.title,
+            author: newBlog.author,
+            url: newBlog.url,
+            userId: props.user.id
+        }
+        blogService.create(newObj)
+        .then(returnedBlog => {
+            props.setBlogs(props.blogs.concat(returnedBlog))
+            setNewBlog({})
+            props.setNotification({ message: `a new blog  ${returnedBlog.title} by ${returnedBlog.author} added`, type: "success" })
 
-        setTimeout(() => {
-            props.setNotification({message: '', type: null})
-        },5000)
-      })
-    .then(()=>setBlogVisible(false))
+            setTimeout(() => {
+                props.setNotification({message: '', type: null})
+            },5000)
+        })
+        .then(()=>setBlogVisible(false))
     }
+
+    const sortedBlogs = props.blogs.sort((current, next) => next.likes - current.likes)
     
   return (
       <div>
@@ -53,7 +55,7 @@ const Blogs = (props) => {
                   addBlog={addBlog}
                   setBlogVisible={setBlogVisible} />
         </div>
-        {props.blogs.map(blog =>
+        {sortedBlogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
         )}
       </div>
