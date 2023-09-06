@@ -2,7 +2,6 @@ import { useState } from "react"
 import blogService from '../services/blogs'
 
 const Blog = (props) => {
-
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -24,6 +23,18 @@ const Blog = (props) => {
     setLikes(likes+1)
   }
 
+  const removeBlog = (id) => {
+    const confirm = window.confirm(`Remove blog ${props.blog.title} by ${props.blog.author}`)
+    if (confirm) {
+      blogService
+        .remove(id)
+        .then(() => {
+          props.handleBlogRemoval(id)
+        })      
+    }
+  }
+  
+
   return (
     <div style={blogStyle}>
     {props.blog.title} by {props.blog.author}
@@ -32,6 +43,7 @@ const Blog = (props) => {
         {props.blog.url}<br />
         likes {likes} <button onClick={updateLike}>like</button><br />
         {props.blog.user.name}<br />
+        <button onClick={()=>removeBlog(props.blog.id)}>remove</button>
       </div>
   </div> ) 
 }

@@ -6,7 +6,7 @@ GET http://localhost:3003/api/users
 ###
 POST http://localhost:3003/api/blogs HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NGVlNzEwOWU2MjRkNWM0Njk1ZGQ3M2MiLCJpYXQiOjE2OTM0MDkzNTksImV4cCI6MTY5MzQxMjk1OX0.SubWTLdxDuBugavFD4q5Q55uq4C8r2US5lUXWoFEBRQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NGVlNzEwOWU2MjRkNWM0Njk1ZGQ3M2MiLCJpYXQiOjE2OTM5NzAyODh9.yoQX1mcOIg7D4cn2cq7IO7OIKAIfiF_P7wsXttqkQ7c
 
 {
     "title": "demo title_token_middleware_delete_test2",

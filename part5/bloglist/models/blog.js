@@ -10,10 +10,7 @@ const schema = mongoose.Schema({
         required: true
     },
     url: String,
-    likes: {
-        type: Number,
-        default: 1
-    },
+    likes: Number,
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

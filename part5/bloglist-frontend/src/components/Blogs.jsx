@@ -6,7 +6,7 @@ import NewBlogForm from "./NewBlogForm"
 const Blogs = (props) => {
     const [newBlogVisible, setBlogVisible] = useState(false)
     const [newBlog, setNewBlog] = useState({})
-     const hide = { display: newBlogVisible ? 'none' : '' }
+    const hide = { display: newBlogVisible ? 'none' : '' }
     const show = { display: newBlogVisible ? '' : 'none' }
 
     const handleNewBlogChange = (event) => {
@@ -25,19 +25,22 @@ const Blogs = (props) => {
             userId: props.user.id
         }
         blogService.create(newObj)
-        .then(returnedBlog => {
-            props.setBlogs(props.blogs.concat(returnedBlog))
-            setNewBlog({})
-            props.setNotification({ message: `a new blog  ${returnedBlog.title} by ${returnedBlog.author} added`, type: "success" })
+            .then(returnedBlog => {
+                console.log(returnedBlog)
+                props.setBlogs(props.blogs.concat(returnedBlog))
+                setNewBlog({})
+                props.setNotification({ message: `a new blog  ${returnedBlog.title} by ${returnedBlog.author} added`, type: "success" })
 
-            setTimeout(() => {
-                props.setNotification({message: '', type: null})
-            },5000)
-        })
+                setTimeout(() => {
+                    props.setNotification({message: '', type: null})
+                },5000)
+            })
         .then(()=>setBlogVisible(false))
     }
 
-    const sortedBlogs = props.blogs.sort((current, next) => next.likes - current.likes)
+    const handleBlogRemoval = (id) => {
+        props.setBlogs(props.blogs.filter(blog => blog.id !== id))
+    }
     
   return (
       <div>
@@ -53,10 +56,13 @@ const Blogs = (props) => {
               <NewBlogForm
                   handleNewBlogChange={handleNewBlogChange}
                   addBlog={addBlog}
-                  setBlogVisible={setBlogVisible} />
+                  setBlogVisible={setBlogVisible}/>
         </div>
-        {sortedBlogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        {props.blogs.map(blog =>
+            <Blog
+                key={blog.id}
+                blog={blog}
+                handleBlogRemoval={handleBlogRemoval}/>
         )}
       </div>
   )

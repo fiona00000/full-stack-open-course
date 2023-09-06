@@ -1,6 +1,6 @@
 GET http://localhost:3003/api/blogs
 
 ###
-DELETE http://localhost:3003/api/blogs/64ef64ea7c7ebd706a4a6dac HTTP/1.1
+DELETE http://localhost:3003/api/blogs/64f7ef7f823483f3753e2d99 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NGVlNzEwOWU2MjRkNWM0Njk1ZGQ3M2MiLCJpYXQiOjE2OTM0MDkzNTksImV4cCI6MTY5MzQxMjk1OX0.SubWTLdxDuBugavFD4q5Q55uq4C8r2US5lUXWoFEBRQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NGVlNzEwOWU2MjRkNWM0Njk1ZGQ3M2MiLCJpYXQiOjE2OTM5NzAyODh9.yoQX1mcOIg7D4cn2cq7IO7OIKAIfiF_P7wsXttqkQ7c
