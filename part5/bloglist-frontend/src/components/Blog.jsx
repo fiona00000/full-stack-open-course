@@ -32,17 +32,16 @@ const Blog = (props) => {
           props.handleBlogRemoval(id)
         })      
     }
-  }
-  
+  }  
 
   return (
     <div style={blogStyle}>
-    {props.blog.title} by {props.blog.author}
+    <p className="title_author">{props.blog.title} by {props.blog.author}</p>
       <button onClick={() => setVisible(!visible)}>{visible ? "hide" : "view"}</button>
       <div style={show}>
         <a href={props.blog.url}>{props.blog.url}</a><br />
         likes {likes} <button onClick={updateLike}>like</button><br />
-        {props.blog.user.name}<br />
+        {/* {props.blog.user.name}<br /> */}
         <button onClick={()=>removeBlog(props.blog.id)}>remove</button>
       </div>
   </div> ) 
