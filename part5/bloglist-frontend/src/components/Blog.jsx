@@ -39,8 +39,8 @@ const Blog = (props) => {
     <p className="title_author">{props.blog.title} by {props.blog.author}</p>
       <button onClick={() => setVisible(!visible)}>{visible ? "hide" : "view"}</button>
       <div style={show}>
-        <a href={props.blog.url}>{props.blog.url}</a><br />
-        likes {likes} <button onClick={updateLike}>like</button><br />
+        <p className="url_like"><a href={props.blog.url}>{props.blog.url}</a><br />
+        likes {likes}</p> <button onClick={updateLike}>like</button><br />
         {/* {props.blog.user.name}<br /> */}
         <button onClick={()=>removeBlog(props.blog.id)}>remove</button>
       </div>
